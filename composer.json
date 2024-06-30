@@ -1,0 +1,34 @@
+{
+    "name": "kirinaki/framework",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Kirinaki\\Framework\\": "src/",
+            "Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Christopher Trevilla Figueroa",
+            "email": "christophertrevilla@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "twig/twig": "^3.7",
+        "htmlburger/carbon-fields": "^3.6",
+        "php-di/php-di": "^7.0"
+    },
+    "require-dev": {
+        "brain/monkey": "2.*",
+        "pestphp/pest": "^2.34",
+        "mockery/mockery": "^1.6",
+        "symfony/var-dumper": "^7.1",
+        "friendsofphp/php-cs-fixer": "^3.59"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
