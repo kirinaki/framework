@@ -50,12 +50,12 @@ class View
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function make(string $view, $context): string
+    public function make(string $view, $context = []): string
     {
         return $this->twig->render($view . ".twig", $context);
     }
 
-    public function render(string $view, $context): void
+    public function render(string $view, $context = []): void
     {
         echo $this->make($view, $context);
     }
