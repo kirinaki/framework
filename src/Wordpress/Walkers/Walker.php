@@ -4,21 +4,8 @@ namespace Kirinaki\Framework\Wordpress\Walkers;
 
 class Walker
 {
-    /**
-     * What the class handles.
-     *
-     * @since 2.1.0
-     * @var string
-     */
-    public $tree_type;
-
-    /**
-     * DB fields to use.
-     *
-     * @since 2.1.0
-     * @var string[]
-     */
-    public $db_fields;
+    public $tree_type = ['post_type', 'taxonomy', 'custom'];
+    public $db_fields = ['parent' => 'menu_item_parent', 'id' => 'db_id'];
 
     /**
      * Max number of pages walked by the paged walker.
