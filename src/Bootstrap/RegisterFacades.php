@@ -3,6 +3,7 @@
 namespace Kirinaki\Framework\Bootstrap;
 
 use DI\Container;
+use Kirinaki\Framework\Facades\Config;
 use Kirinaki\Framework\Facades\Facade;
 
 class RegisterFacades

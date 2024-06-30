@@ -21,7 +21,7 @@ class RegisterTwig
     public function run(): void
     {
         $loader = $this->app->make(FilesystemLoader::class);
-        $loader->setPaths(dirname(__DIR__) . '/resources');
+        $loader->setPaths($this->app->get("root_path") . '/resources');
 
         $twig = new Environment($loader, [
             'debug' => Config::get("app.debug"),

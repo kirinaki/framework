@@ -24,4 +24,12 @@ class Borealis
         $this->app->make(RegisterTwig::class)->run();
         $this->app->make(BootProviders::class)->run();
     }
+
+    public static function start(string $root): void
+    {
+        $app = new Container([
+            "root_path" => $root,
+        ]);
+        (new Borealis($app))->boot();
+    }
 }

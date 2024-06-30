@@ -16,6 +16,7 @@ class BootProviders
 
     public function run(): void
     {
+
         foreach (Config::get("app.providers") as $serviceProvider) {
             (new $serviceProvider($this->app))->register();
         }

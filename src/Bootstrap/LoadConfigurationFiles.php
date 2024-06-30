@@ -22,11 +22,9 @@ class LoadConfigurationFiles
      */
     public function run(): void
     {
-        $this->app->set("configuration.app", require $this->getPath() . "/config/app.php");
+        $this->app->set("configuration", [
+            "app" => require $this->app->get("root_path") . "/config/app.php"
+        ]);
     }
 
-    private function getPath(): string
-    {
-        return dirname(__DIR__);
-    }
 }
