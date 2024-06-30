@@ -17,4 +17,9 @@ class Container
             ->where('post_type', '=', $name);
     }
 
+    public static function theme(string $name, string $label): \Carbon_Fields\Container\Container
+    {
+        return \Carbon_Fields\Container::make("theme_options", $label);
+    }
+
 }
