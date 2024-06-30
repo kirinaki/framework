@@ -3,6 +3,7 @@
 namespace Kirinaki\Framework;
 
 use DI\Container;
+use Kirinaki\Framework\Bootstrap\BootCarbonFields;
 use Kirinaki\Framework\Bootstrap\BootProviders;
 use Kirinaki\Framework\Bootstrap\LoadConfigurationFiles;
 use Kirinaki\Framework\Bootstrap\RegisterFacades;
@@ -23,6 +24,7 @@ class Borealis
         $this->app->make(LoadConfigurationFiles::class)->run();
         $this->app->make(RegisterTwig::class)->run();
         $this->app->make(BootProviders::class)->run();
+        $this->app->make(BootCarbonFields::class)->run();
     }
 
     public static function start(string $root): void
