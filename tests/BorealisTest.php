@@ -12,7 +12,9 @@ it('should works', function () {
     $mockFileSysyem = Mockery::mock(FilesystemLoader::class);
     $mockFileSysyem->shouldReceive("setPaths")->andReturn();
 
-    $container = new Container([
+    $container = new Container(
+        [
+            "root_path" => __DIR__,
             "configuration" => [
                 "app" => [
                     "debug" => true,
