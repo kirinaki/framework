@@ -15,6 +15,10 @@ class RestControllerStrategy implements Strategy
     {
         add_action('rest_api_init', function () use ($classMeta, $controller) {
             foreach ($classMeta->getMethods() as $method => $attribute) {
+                if ($method == "__construct") {
+                    continue;
+                }
+
                 $args = [
                     "methods" => $classMeta->getMethodAttribute($method, Route::class)->getMethod(),
                     "callback" => [$controller, $method],
