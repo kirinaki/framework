@@ -190,3 +190,4 @@ vendor
 .php-cs-fixer.cache
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,linux,macos,phpstorm+all,visualstudiocode,notepadpp
+.phpunit.result.cache
