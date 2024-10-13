@@ -20,7 +20,8 @@ class Application extends Container
     {
         $this->set(Application::class, $this);
         $this->set("config", [
-            "basePath" => $this->basePath
+            "basePath" => $this->basePath,
+            "publicPath" => $this->basePath . "/public",
         ]);
         Facade::setFacadeApplication($this);
     }
