@@ -21,7 +21,8 @@
         "php": "^8.2",
         "php-di/php-di": "^7.0",
         "symfony/var-dumper": "^7.1",
-        "illuminate/collections": "^11.27"
+        "illuminate/collections": "^11.27",
+        "twig/twig": "^3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^11",
