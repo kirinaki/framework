@@ -5,7 +5,7 @@ namespace Tests;
 use Kirinaki\Framework\Adapters\PHP\FileSystemAdapter;
 use Kirinaki\Framework\Adapters\Wordpress\WordpressAdapter;
 use Kirinaki\Framework\Application;
-use Kirinaki\Framework\Vite;
+use Kirinaki\Framework\View\Vite;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
