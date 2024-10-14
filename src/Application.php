@@ -4,6 +4,8 @@ namespace Kirinaki\Framework;
 
 use DI\Container;
 use Kirinaki\Framework\Support\Facades\Facade;
+use Kirinaki\Framework\View\Engines\Engine;
+use Kirinaki\Framework\View\Engines\TwigEngine;
 
 class Application extends Container
 {
@@ -14,6 +16,7 @@ class Application extends Container
         parent::__construct();
         $this->basePath = $basePath;
         $this->registerBaseBindings();
+        $this->registerViewBindings();
     }
 
     protected function registerBaseBindings(): void
@@ -24,6 +27,11 @@ class Application extends Container
             "publicPath" => $this->basePath . "/public",
         ]);
         Facade::setFacadeApplication($this);
+    }
+
+    protected function registerViewBindings()
+    {
+        $this->set(Engine::class, new TwigEngine($this));
     }
 
     public static function configure(string $basePath): ApplicationBuilder
