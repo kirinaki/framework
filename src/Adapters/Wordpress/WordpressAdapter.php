@@ -10,6 +10,11 @@ class WordpressAdapter
         return true;
     }
 
+    public function doAction(string $hook): void
+    {
+        do_action($hook);
+    }
+
     public function filter(string $hook, callable $callback, int $priority = 10, int $acceptedArgs = 1): bool
     {
         return add_filter($hook, $callback, $priority, $acceptedArgs);
@@ -18,6 +23,16 @@ class WordpressAdapter
     public function escapeUrl(string $url, array $protocols = null, string $context = "display"): string
     {
         return esc_url($url, $protocols, $context);
+    }
+
+    public function escapeAttribute(string $text): string
+    {
+        return esc_attr($text);
+    }
+
+    public function getBodyClass(string|array $classes = ""): array
+    {
+        return get_body_class($classes);
     }
 
     public function getThemeFileUri(string $file = ""): string
