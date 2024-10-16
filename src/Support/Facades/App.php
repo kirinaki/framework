@@ -2,7 +2,7 @@
 
 namespace Kirinaki\Framework\Support\Facades;
 
-use Kirinaki\Framework\Application;
+use Kirinaki\Framework\Application\Application;
 
 class App extends Facade
 {
