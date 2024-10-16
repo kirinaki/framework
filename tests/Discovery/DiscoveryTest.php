@@ -1,10 +1,10 @@
 <?php
 
-namespace Discovery;
+namespace Tests\Discovery;
 
 
 use Kirinaki\Framework\Adapters\Wordpress\WordpressAdapter;
-use Kirinaki\Framework\Application;
+use Kirinaki\Framework\Application\Application;
 use Kirinaki\Framework\Discovery\Discovery;
 use Mockery;
 use PHPUnit\Framework\TestCase;

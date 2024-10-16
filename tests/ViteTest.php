@@ -4,7 +4,7 @@ namespace Tests;
 
 use Kirinaki\Framework\Adapters\PHP\FileSystemAdapter;
 use Kirinaki\Framework\Adapters\Wordpress\WordpressAdapter;
-use Kirinaki\Framework\Application;
+use Kirinaki\Framework\Application\Application;
 use Kirinaki\Framework\View\Vite;
 use Mockery;
 use PHPUnit\Framework\TestCase;
@@ -37,6 +37,7 @@ class ViteTest extends TestCase
         $wordpress->shouldReceive("escapeUrl")->andReturn("http://test");
 
         $this->app->set(WordpressAdapter::class, $wordpress);
+        $this->app->set("path.public", __DIR__);
 
         $vite = new Vite();
         $vite->register();
@@ -68,6 +69,7 @@ class ViteTest extends TestCase
 
         $this->app->set(WordpressAdapter::class, $wordpress);
         $this->app->set(FileSystemAdapter::class, $storage);
+        $this->app->set("path.public", __DIR__);
 
         $vite = new Vite();
         $vite->register();
