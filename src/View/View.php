@@ -13,6 +13,10 @@ class View
         $this->engine = $engine;
     }
 
+    public function addExtension($extension): void
+    {
+        $this->engine->addExtension($extension);
+    }
 
     public function render(string $view, array $data = []): void
     {
