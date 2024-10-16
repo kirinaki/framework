@@ -2,50 +2,44 @@
 
 namespace Kirinaki\Framework\View\Engines;
 
-use Kirinaki\Framework\Application;
-use Kirinaki\Framework\Support\Facades\Vite;
-use Kirinaki\Framework\Support\Facades\Wordpress;
+use Kirinaki\Framework\Application\Application;
+use Kirinaki\Framework\View\ViewBuilder;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
-use Twig\TwigFunction;
 
 class TwigEngine implements Engine
 {
     private Application $app;
+    private ViewBuilder $viewBuilder;
 
     private Environment $twig;
 
-    public function __construct(Application $app)
+    public function __construct(Application $app, ViewBuilder $viewBuilder)
     {
         $this->app = $app;
+        $this->viewBuilder = $viewBuilder;
         $this->configure();
     }
 
     private function configure(): void
     {
-        $config = $this->app->get("config");
-        $loader = new FilesystemLoader($config["basePath"] . "/resources/views");
+        $viewPath = $this->app->get("path.views");
+
+        $loader = new FilesystemLoader($viewPath);
         $this->twig = new Environment($loader);
 
-        $this->twig->addFunction(new TwigFunction('wp_head', function () {
-            Wordpress::doAction('wp_head');
-        }));
-
-        $this->twig->addFunction(new TwigFunction('wp_footer', function () {
-            Wordpress::doAction('wp_footer');
-        }));
-
-        $this->twig->addFunction(new TwigFunction('vite', function () {
-            Vite::register();
-        }));
-
-        $this->twig->addFunction(new TwigFunction('body_class', function ($css_class = '') {
-            echo sprintf("class=\"%s\"", Wordpress::escapeAttribute(implode(' ', Wordpress::getBodyClass($css_class))));
-        }));
+        foreach ($this->viewBuilder->getFunctions() as $function) {
+            $this->twig->addFunction($this->app->make($function)->handle());
+        }
     }
 
     public function render(string $file, array $data = []): string
     {
         return $this->twig->render($file, $data);
+    }
+
+    public function registerFunction($function): void
+    {
+        $this->twig->addFunction($function);
     }
 }
