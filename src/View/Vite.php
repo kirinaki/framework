@@ -43,8 +43,8 @@ class Vite
     public function register()
     {
         Wordpress::action("wp_enqueue_scripts", function () {
-            $config = App::get("config");
-            $manifestPath = $config["publicPath"] . $this->manifestPath;
+            $publicPath = App::get("path.public");
+            $manifestPath = $publicPath . $this->manifestPath;
             $fullUrl = "{$this->host}:{$this->port}";
 
             if ($this->isRemoteAvailable($fullUrl)) {
