@@ -4,7 +4,7 @@ namespace Kirinaki\Framework\Discovery;
 
 
 use Illuminate\Support\Collection;
-use Kirinaki\Framework\Application;
+use Kirinaki\Framework\Application\Application;
 use Kirinaki\Framework\Discovery\Attributes\Action;
 use Kirinaki\Framework\Discovery\Attributes\PostType;
 use Kirinaki\Framework\Discovery\Attributes\Route;
