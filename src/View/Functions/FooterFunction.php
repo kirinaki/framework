@@ -10,7 +10,7 @@ class FooterFunction extends ViewFunction
     function handle(): TwigFunction
     {
         return new TwigFunction('wp_footer', function () {
-            Wordpress::doAction('wp_footer');
+            do_action('wp_footer');
         });
     }
 }

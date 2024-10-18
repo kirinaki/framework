@@ -9,7 +9,7 @@ class ActionHandler extends AttributeHandler
 {
     public function handle(Discoverable $class, ClassDefinition $classDefinition, string $function, $attribute): void
     {
-        $this->wordpress->action(
+        add_action(
             $attribute->getHook(),
             fn() => [$class, $function],
             $attribute->getPriority(),

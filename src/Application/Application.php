@@ -4,39 +4,28 @@ namespace Kirinaki\Framework\Application;
 
 use DI\Container;
 use Kirinaki\Framework\Application\Configuration\ApplicationBuilder;
+use Kirinaki\Framework\Application\Configuration\ApplicationConfig;
 use Kirinaki\Framework\Support\Facades\Facade;
 
 class Application extends Container
 {
-    private string $basePath;
+    const VERSION = '0.5.0';
 
-    public function __construct(string $basePath)
+    public function __construct(protected ApplicationConfig $applicationConfig)
     {
         parent::__construct();
-        $this->setBasePath($basePath);
-        $this->registerBaseBindings();
+        $this->registerBasics();
     }
 
-    public function setBasePath(string $basePath): static
-    {
-        $this->basePath = rtrim($basePath, '\/');
-        return $this;
-    }
-
-    public function getBasePath(): string
-    {
-        return $this->basePath;
-    }
-
-    protected function registerBaseBindings(): void
+    protected function registerBasics(): void
     {
         $this->set(Application::class, $this);
+        $this->set(ApplicationConfig::class, $this->applicationConfig);
         Facade::setFacadeApplication($this);
-        $this->set("path.base", $this->basePath);
     }
 
-    public static function configure(string $basePath): ApplicationBuilder
+    public static function configure(ApplicationConfig $applicationConfig): ApplicationBuilder
     {
-        return (new ApplicationBuilder(new static($basePath)));
+        return new ApplicationBuilder(new static($applicationConfig));
     }
 }

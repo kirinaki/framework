@@ -10,7 +10,7 @@ class HeadFunction extends ViewFunction
     function handle(): TwigFunction
     {
         return new TwigFunction('wp_head', function () {
-            Wordpress::doAction('wp_head');
+            do_action('wp_head');
         });
     }
 }

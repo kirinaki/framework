@@ -9,8 +9,8 @@ class PostTypeHandler extends AttributeHandler
 {
     public function handle(Discoverable $class, ClassDefinition $classDefinition, string $function, $attribute): void
     {
-        $this->wordpress->action("init", function () use ($attribute, $class, $function) {
-            $this->wordpress->registerPostType($attribute->getName(), [$class, $function]);
+        add_action("init", function () use ($attribute, $class, $function) {
+            register_post_type($attribute->getName(), [$class, $function]);
         });
     }
 }

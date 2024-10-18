@@ -24,8 +24,8 @@ class RouteHandler extends AttributeHandler
             $arguments["permission_callback"] = $attribute->permissions()->every(fn($item) => $item::create()->evaluate());
         }
 
-        $this->wordpress->action("rest_api_init", function () use ($namespace, $attribute, $arguments) {
-            $this->wordpress->registerRestRoute($namespace, $attribute->getPath(), $arguments);
+        add_action("rest_api_init", function () use ($namespace, $attribute, $arguments) {
+            register_rest_route($namespace, $attribute->getPath(), $arguments);
         });
     }
 }

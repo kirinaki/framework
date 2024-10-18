@@ -2,38 +2,46 @@
 
 namespace Kirinaki\Framework\Application\Configuration;
 
-use Closure;
 use Kirinaki\Framework\Application\Application;
+use Kirinaki\Framework\Discovery\Configuration\DiscoveryConfig;
 use Kirinaki\Framework\Discovery\Discovery;
+use Kirinaki\Framework\View\Configuration\ViewConfig;
 use Kirinaki\Framework\View\Engines\Engine;
 use Kirinaki\Framework\View\Engines\TwigEngine;
-use Kirinaki\Framework\View\ViewBuilder;
+use function DI\get;
 
 class ApplicationBuilder
 {
-    private Application $app;
-
-
-    public function __construct(Application $application)
+    public function __construct(protected Application $app)
     {
-        $this->app = $application;
     }
 
-    public function enableViews(string $viewsPath, Closure $closure = null): static
+    public function themeSetup(array $discoverables = [], array $functions = [])
     {
-        $this->app->set("path.views", $this->app->getBasePath() . $viewsPath);
-        $this->app->set("path.public", $this->app->getBasePath() . "/public");
-        $viewBuilder = new ViewBuilder();
-        if ($closure != null) $closure($viewBuilder);
-        $this->app->set(Engine::class, new TwigEngine($this->app, $viewBuilder));
+        $baseConfig = $this->app->get(ApplicationConfig::class);
+        $this->enableViews(new ViewConfig(viewPath: $baseConfig->getBasePath() . "/resources/views", functions: array_merge($functions, [
+            \Kirinaki\Framework\View\Functions\HeadFunction::class,
+            \Kirinaki\Framework\View\Functions\FooterFunction::class,
+            \Kirinaki\Framework\View\Functions\BodyClassFunction::class,
+        ])));
+        $this->enableDiscovery(new DiscoveryConfig(discoverables: $discoverables));
         return $this;
     }
 
-    public function withDiscoverables(array $discoverables): self
+    public function enableViews(ViewConfig $viewConfig): static
     {
+        $this->app->set(ViewConfig::class, $viewConfig);
+        $this->app->set(Engine::class, get(TwigEngine::class));
+        return $this;
+    }
+
+    public function enableDiscovery(DiscoveryConfig $discoveryConfig): self
+    {
+        $this->app->set(DiscoveryConfig::class, $discoveryConfig);
         $discovery = $this->app->make(Discovery::class);
-        foreach ($discoverables as $class) {
-            $discovery->explore(new $class);
+
+        foreach ($discoveryConfig->getDiscoverables() as $class) {
+            $discovery->explore($this->app->make($class));
         }
         return $this;
     }

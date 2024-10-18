@@ -3,32 +3,25 @@
 namespace Kirinaki\Framework\View\Engines;
 
 use Kirinaki\Framework\Application\Application;
-use Kirinaki\Framework\View\ViewBuilder;
+use Kirinaki\Framework\View\Configuration\ViewConfig;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 class TwigEngine implements Engine
 {
-    private Application $app;
-    private ViewBuilder $viewBuilder;
-
     private Environment $twig;
 
-    public function __construct(Application $app, ViewBuilder $viewBuilder)
+    public function __construct(private Application $app, private ViewConfig $viewConfig)
     {
-        $this->app = $app;
-        $this->viewBuilder = $viewBuilder;
         $this->configure();
     }
 
     private function configure(): void
     {
-        $viewPath = $this->app->get("path.views");
-
-        $loader = new FilesystemLoader($viewPath);
+        $loader = new FilesystemLoader($this->viewConfig->getViewPath());
         $this->twig = new Environment($loader);
 
-        foreach ($this->viewBuilder->getFunctions() as $function) {
+        foreach ($this->viewConfig->getFunctions() as $function) {
             $this->twig->addFunction($this->app->make($function)->handle());
         }
     }
