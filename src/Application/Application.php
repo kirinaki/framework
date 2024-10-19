@@ -6,6 +6,8 @@ use DI\Container;
 use Kirinaki\Framework\Application\Configuration\ApplicationBuilder;
 use Kirinaki\Framework\Application\Configuration\ApplicationConfig;
 use Kirinaki\Framework\Support\Facades\Facade;
+use Kirinaki\Framework\Utils\WordpressAdapter;
+use function DI\autowire;
 
 class Application extends Container
 {
@@ -21,6 +23,7 @@ class Application extends Container
     {
         $this->set(Application::class, $this);
         $this->set(ApplicationConfig::class, $this->applicationConfig);
+        $this->set(WordpressAdapter::class, autowire());
         Facade::setFacadeApplication($this);
     }
 
