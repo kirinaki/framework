@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Stubs\Functions;
+namespace Tests\Views\Stubs\Functions;
 
 use Kirinaki\Framework\View\Functions\ViewFunction;
 use Twig\TwigFunction;
