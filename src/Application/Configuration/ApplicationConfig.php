@@ -7,7 +7,6 @@ class ApplicationConfig
     public function __construct(
         private string $basePath,
         private string $filePath,
-        private string $baseUrl,
     )
     {
     }
@@ -20,10 +19,5 @@ class ApplicationConfig
     public function getFilePath(): string
     {
         return $this->filePath;
-    }
-
-    public function getBaseUrl(): string
-    {
-        return $this->baseUrl;
     }
 }
