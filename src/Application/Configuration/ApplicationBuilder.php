@@ -8,6 +8,8 @@ use Kirinaki\Framework\Discovery\Discovery;
 use Kirinaki\Framework\View\Configuration\ViewConfig;
 use Kirinaki\Framework\View\Engines\Engine;
 use Kirinaki\Framework\View\Engines\TwigEngine;
+use Kirinaki\Framework\Vite\Configuration\ViteConfig;
+use Kirinaki\Framework\Vite\Vite;
 use function DI\get;
 
 class ApplicationBuilder
@@ -25,6 +27,11 @@ class ApplicationBuilder
             \Kirinaki\Framework\View\Functions\BodyClassFunction::class,
         ])));
         $this->enableDiscovery(new DiscoveryConfig(discoverables: $discoverables));
+        $this->enableVite(new ViteConfig(
+            publicPath: $baseConfig->getBasePath() . "/public",
+            entrypoints: ["resources/js/main.ts", "resources/css/main.css"],
+            url: get_theme_file_uri() . "/public"
+        ));
         return $this;
     }
 
@@ -35,10 +42,24 @@ class ApplicationBuilder
         return $this;
     }
 
+    public function enableVite(ViteConfig $viteConfig): static
+    {
+        $this->app->set(ViteConfig::class, $viteConfig);
+        $this->app->get(Vite::class)->handle();
+        return $this;
+    }
+
+    public function enableViteInAdmin(ViteConfig $viteConfig, array $hooks): static
+    {
+        $this->app->set(ViteConfig::class, $viteConfig);
+        $this->app->get(Vite::class)->handle($hooks);
+        return $this;
+    }
+
     public function enableDiscovery(DiscoveryConfig $discoveryConfig): self
     {
         $this->app->set(DiscoveryConfig::class, $discoveryConfig);
-        $discovery = $this->app->make(Discovery::class);
+        $discovery = $this->app->get(Discovery::class);
 
         foreach ($discoveryConfig->getDiscoverables() as $class) {
             $discovery->explore($this->app->make($class));

@@ -7,6 +7,6 @@ class Vite extends Facade
 
     protected static function getFacadeAccessor()
     {
-        return \Kirinaki\Framework\View\Vite::class;
+        return \Kirinaki\Framework\Vite\Vite::class;
     }
 }
