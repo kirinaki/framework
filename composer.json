@@ -1,9 +1,13 @@
 {
     "name": "kirinaki/framework",
-    "type": "library",
+    "type": "project",
     "autoload": {
         "psr-4": {
-            "Kirinaki\\Framework\\": "src/",
+            "Kirinaki\\Framework\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Tests\\": "tests/"
         }
     },
@@ -15,20 +19,14 @@
     ],
     "require": {
         "php": "^8.2",
-        "twig/twig": "^3.7",
-        "htmlburger/carbon-fields": "^3.6",
         "php-di/php-di": "^7.0",
-        "symfony/var-dumper": "^7.1"
+        "symfony/var-dumper": "^7.1",
+        "illuminate/collections": "^11.27",
+        "twig/twig": "^3.0"
     },
     "require-dev": {
-        "brain/monkey": "2.*",
-        "pestphp/pest": "^2.34",
+        "phpunit/phpunit": "^11",
         "mockery/mockery": "^1.6",
-        "friendsofphp/php-cs-fixer": "^3.59"
-    },
-    "config": {
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
-        }
+        "php-mock/php-mock-mockery": "^1.4"
     }
 }
