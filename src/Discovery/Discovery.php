@@ -8,6 +8,7 @@ use Kirinaki\Framework\Application\Application;
 use Kirinaki\Framework\Discovery\Attributes\Action;
 use Kirinaki\Framework\Discovery\Attributes\PostType;
 use Kirinaki\Framework\Discovery\Attributes\Route;
+use Kirinaki\Framework\Discovery\Configuration\DiscoveryConfig;
 use Kirinaki\Framework\Discovery\Handlers\ActionHandler;
 use Kirinaki\Framework\Discovery\Handlers\PostTypeHandler;
 use Kirinaki\Framework\Discovery\Handlers\RouteHandler;
@@ -18,6 +19,12 @@ class Discovery
 {
     private Application $app;
 
+    private array $defaultHandlers = [
+        Route::class => RouteHandler::class,
+        PostType::class => PostTypeHandler::class,
+        Action::class => ActionHandler::class,
+    ];
+
     public function __construct(Application $app)
     {
         $this->app = $app;
@@ -27,16 +34,13 @@ class Discovery
     {
         $reflection = new ReflectionClass($class);
         $classDefinition = ClassDefinition::create($reflection->getName(), $this->exploreClassAttributes($reflection));
+        $handlers = array_merge($this->defaultHandlers, $this->app->get(DiscoveryConfig::class)->getHandlers());
 
         foreach ($reflection->getMethods() as $method) {
             foreach ($method->getAttributes() as $attribute) {
 
-                $handler = match ($attribute->getName()) {
-                    Route::class => RouteHandler::class,
-                    PostType::class => PostTypeHandler::class,
-                    Action::class => ActionHandler::class,
-                    default => null
-                };
+                $handler = $handlers[$attribute->getName()] ?? null;
+
                 if ($handler) {
                     $this->app->make($handler)->handle(
                         $class,
