@@ -11,7 +11,7 @@ use function DI\autowire;
 
 class Application extends Container
 {
-    const VERSION = '0.5.0';
+    const VERSION = '1.0.0';
 
     public function __construct(protected ApplicationConfig $applicationConfig)
     {
